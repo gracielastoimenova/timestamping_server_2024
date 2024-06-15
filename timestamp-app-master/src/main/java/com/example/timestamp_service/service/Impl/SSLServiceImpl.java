@@ -31,15 +31,15 @@ public class SSLServiceImpl implements SSLService {
 
     @Override
     public PrivateKey loadPrivateKey() throws KeyStoreException,  NoSuchAlgorithmException, UnrecoverableKeyException {
-        String alias = "1";
-        String password = "timestamp";
+        String alias = "";
+        String password = "";
 
         return (PrivateKey) keyStore.getKey(alias,password.toCharArray());
     }
 
     @Override
     public X509Certificate loadCertificate() throws KeyStoreException {
-        String alias = "1";
+        String alias = "";
         return (X509Certificate) keyStore.getCertificate(alias);
     }
 
