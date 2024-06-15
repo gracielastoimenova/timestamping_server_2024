@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Timestamps</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #a5aae4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            font-family: "Courier New", monospace;
+        }
+
+        input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff73b3;
+            box-shadow: 0 0 10px 1px #ff73b3;
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            height: 40px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        #search-results {
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            background-color: #f9f9f9;
+            width: 60%;
+            padding-top: 20px;
+            margin: 20px auto;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .center {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff73b3;
+            box-shadow: 0 0 10px 1px #ff73b3;
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #e0629b;
+        }
+
+        .search-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <h1>Search here</h1>
+    <div class="search-div">
+        <form id="search-form" class="search-form" method="post" th:action="@{/main/viewTimestamps}">
+            <input type="text" id="search-input" placeholder="searchInput" th:name="searchInput">
+            <button type="submit">
+                <span class="material-symbols-outlined">search</span>
+            </button>
+        </form>
+        <form class="search-form" method="post" th:action="@{/main/viewTimestamps/all}">
+            <button type="submit">View all</button>
+        </form>
+    </div>
+
+    <div id="search-results">
+        <table>
+            <tr>
+                <th>Archive number</th>
+                <th>Timestamp</th>
+                <th>File</th>
+            </tr>
+            <form>
+                <tr th:each="timestamp:${timestamps}">
+                    <td th:text="${timestamp.archiveNum}"></td>
+                    <td th:text="${timestamp.dateAndTimeOfSigning}"></td>
+                    <td>
+                        <a th:href="@{/main/downloadFile(fileName=${timestamp.getFile().getFileName()})}" th:text="${timestamp.getFile().getFileName()}" target="_blank"></a>
+                    </td>
+                </tr>
+            </form>
+        </table>
+    </div>
+
+    <div class="center">
+        <a th:href="@{'/main'}" class="btn">Back to main</a>
+    </div>
+</div>
+
+</body>
+</html>

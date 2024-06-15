@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/index.css}" />
+    <style>
+        body {
+            background-color: #5356ad;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #a5aae4;
+            position: fixed;
+            top: 0;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            padding: 10px 20px;
+        }
+
+        .navbar ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navbar li {
+            margin-left: 20px;
+        }
+
+        .navbar a, .navbar span {
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .navbar a:hover {
+            background: #ddd;
+            color: #ff73b3;
+        }
+
+        .glavna {
+            background-color: #9297e0;
+            width: 80%;
+            max-width: 900px;
+            margin-top: 150px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        img {
+            height: 200px;
+            width: auto;
+            margin-top: 20px;
+        }
+
+        h3, p {
+            color: white;
+            font-family: "Courier New", serif;
+        }
+
+        h3 {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        p {
+            max-width: 80%;
+            text-align: justify;
+            margin: 20px auto;
+        }
+
+        .section {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .section.alt {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .section.alt img {
+            order: 1;
+            margin-right: 20px;
+        }
+
+        .section.alt .text {
+            order: 2;
+            text-align: left;
+            max-width: 60%;
+        }
+
+        .section img {
+            margin: 20px 0;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn {
+            cursor: pointer;
+            text-align: center;
+            width: 200px;
+            height: 50px;
+            color: #fff;
+            background-color: #ff73b3;
+            border: none;
+            margin: 10px;
+            transition: all 0.5s;
+        }
+
+        .btn:hover {
+            background-color: #e0629b;
+        }
+
+        li {
+            text-decoration: none;
+            list-style-type: none;
+        }
+
+        span {
+            color: white;
+            padding: 14px 16px;
+            display: block;
+        }
+        h1, h2{
+            color: white;
+        }
+    </style>
+</head><body>
+<div class="navbar">
+    <ul>
+        <li sec:authorize="isAuthenticated()">
+            <a href="/logout">Log out</a>
+        </li>
+        <li sec:authorize="isAnonymous()">
+            <a href="/signup">Sign up</a>
+        </li>
+        <li sec:authorize="isAnonymous()">
+            <a href="/login">Log in</a>
+        </li>
+    </ul>
+    <span sec:authentication="name"></span>
+</div>
+
+<div class="glavna">
+    <h1>Welcome to the Timestamping Server</h1>
+    <h2>Upload your files to get a trusted timestamp.</h2>
+    <div class="section">
+        <div class="text">
+            <h3>What is a Timestamp?</h3>
+            <p>A timestamp is a digital record marking the date and time a specific event occurred. Timestamps ensure transparency, integrity, and accountability, playing a crucial role in legal documentation, data security, project management, and more.</p>
+        </div>
+        <img th:src="@{https://originstamp.com/blog/what-is-blockchain-based-timestamping/content-timestamping.png}" alt="img1">
+    </div>
+    <div class="section alt">
+        <img th:src="@{https://th.bing.com/th/id/OIP.BY33c8B-W1sS1HF6TNnTqgHaEe?rs=1&pid=ImgDetMain}" alt="img2">
+        <div class="text">
+            <h3>Why Are Timestamps Important?</h3>
+            <p>Timestamps play a pivotal role in maintaining the authenticity and reliability of digital records. They help verify authenticity, track changes, maintain compliance, and enhance collaboration.</p>
+        </div>
+
+    </div>
+
+    <div class="btn-container">
+        <a th:href="@{'/main/timestamp'}" sec:authorize="hasAnyRole('ADMIN', 'USER')">
+            <button class="btn">Timestamp</button>
+        </a>
+        <a th:href="@{'/main/verify_timestamp'}" sec:authorize="hasAnyRole('ADMIN', 'USER')">
+            <button class="btn">Verify</button>
+        </a>
+        <a th:href="@{'/main/viewTimestamps'}" sec:authorize="hasAnyRole('ADMIN', 'USER')">
+            <button class="btn">Search</button>
+        </a>
+        <a th:href="@{'/main/giveRole'}" sec:authorize="hasRole('ADMIN')">
+            <button class="btn">Give Roles</button>
+        </a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verify Email</title>
+    <style>
+        body {
+            font-family: "Roboto", sans-serif;
+            background-color: #5356ad;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #a5aae4;
+            width: 250px;
+            height: 300px;
+            text-align: center;
+            box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+        }
+        .container h2 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .container form {
+            margin-top: 30px;
+        }
+        .container label {
+            color: white;
+            font-family: "Courier New";
+            font-size: large;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .container input {
+            border: none;
+            width: 190px;
+            height: 20px;
+            margin-bottom: 10px;
+            padding: 6px;
+            border-radius: 4px;
+        }
+        .container button {
+            width: 80px;
+            height: 40px;
+            color: white;
+            background-color: #ff73b3;
+            box-shadow: 0 0 15px 0 #ff73b3;
+            border: none;
+            font-size: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h2>Mail Verification</h2>
+    <form method="POST" action="/verify_email">
+        <label>Enter the code sent to your email here:</label>
+        <input type="text" name="code"/>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+</body>
+</html>

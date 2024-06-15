@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Give Roles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #a5aae4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            font-family: "Courier New", monospace;
+        }
+
+        form {
+            display: inline-block;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff73b3;
+            box-shadow: 0 0 10px 1px #ff73b3;
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 120px;
+            height: 40px;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        #user-list {
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            background-color: #f9f9f9;
+            width: 80%;
+            padding-top: 20px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .center {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff73b3;
+            box-shadow: 0 0 10px 1px #ff73b3;
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #e0629b;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <h1>Give Roles</h1>
+
+    <div id="user-list">
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.fullname}"></td>
+                <td th:text="${user.username}"></td>
+                <td>
+                    <form th:action="@{/main/giveRole}" method="post">
+                        <input type="hidden" name="username" th:value="${user.username}">
+                        <input type="hidden" name="role" value="ROLE_ADMIN">
+                        <button type="submit">ROLE ADMIN</button>
+                    </form>
+                    <form th:action="@{/main/giveRole}" method="post">
+                        <input type="hidden" name="username" th:value="${user.username}">
+                        <input type="hidden" name="role" value="ROLE_USER">
+                        <button type="submit">ROLE USER</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="center">
+        <a th:href="@{/main}" class="btn">Back to main</a>
+    </div>
+</div>
+
+</body>
+</html>

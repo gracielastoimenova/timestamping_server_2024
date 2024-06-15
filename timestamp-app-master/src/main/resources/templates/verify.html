@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #a5aae4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            font-family: "Courier New", monospace;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff73b3;
+            box-shadow: 0 0 10px 1px #ff73b3;
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .result {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .result img {
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+        }
+
+        a {
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+            color: #fff;
+            text-decoration: none;
+            background-color: #ff73b3;
+            padding: 10px 20px;
+            border-radius: 2px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #e0629b;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <h1>Verify Timestamp</h1>
+    <form th:method="POST" th:action="@{'/main/verify_timestamp'}" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <button type="submit">Submit</button>
+        <div class="result" th:if="${verify != null && verify != 'not_found'}">
+            <p th:if="${verify}">This document is not modified.</p>
+            <img th:if="${verify}" th:src="@{https://th.bing.com/th/id/R.e727316f119cb53820695b79e5197510?rik=%2fX%2b8mJcMqHa6KQ&riu=http%3a%2f%2fclipart-library.com%2fimages_k%2fcheck-mark-clip-art-transparent-background%2fcheck-mark-clip-art-transparent-background-10.png&ehk=8NsdktaAowkAaH5JfSppBPnZz8U1R55FgHDioB9NJTA%3d&risl=&pid=ImgRaw&r=0}" alt="True Image">
+            <p th:unless="${verify}">This document has been modified.</p>
+            <img th:unless="${verify}" th:src="@{https://th.bing.com/th/id/R.ef842ae1b8feca5f6b695b2750cba3a2?rik=HjkkTayzaBhhLg&riu=http%3a%2f%2fwww.drodd.com%2fimages15%2fletter-x18.jpg&ehk=HDPoWJRojaOCJw6j%2byLkOfeyxt3UaKnXxi7j9pGDU%2bo%3d&risl=&pid=ImgRaw&r=0}" alt="False Image">
+        </div>
+         <div class="result" th:if="${verify == 'not_found'}">
+            <p>We could not find the document in our archive.</p>
+             <img th:src="@{https://1.bp.blogspot.com/-r49xbsaV2D0/UOVsoWRimSI/AAAAAAAAB7U/LAhYb8ZNeRg/s1600/face-sad.png}" alt="sad smiley">
+        </div>
+    </form>
+    <a th:href="@{'/main'}">Back to main</a>
+</div>
+
+</body>
+</html>
