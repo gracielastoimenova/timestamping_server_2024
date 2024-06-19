@@ -12,12 +12,15 @@ import java.util.Optional;
 public interface TimestampsService {
 
      void timestampFile(byte[] file, String fileName, User user) throws Exception;
+
+     boolean verifyFile(byte[] file, String fileName);
+
      byte[] createTimestamp(byte[] fileContent) throws Exception;
      byte[] concatenateData(byte[] data1, byte[] data2);
      String getCurrentTimestamp();
+     Timestamps findByFileName(String name);
      Timestamps findByFile(byte[] file);
      List<TimestampResponse> getAllTimestampsByUser();
-     boolean verifyFile(byte[] file) throws NoSuchAlgorithmException, UnrecoverableKeyException, KeyStoreException, SignatureException, InvalidKeyException;
      List<TimestampResponse> searchByName(String name);
      List<TimestampResponse> getAllTimestamps();
 

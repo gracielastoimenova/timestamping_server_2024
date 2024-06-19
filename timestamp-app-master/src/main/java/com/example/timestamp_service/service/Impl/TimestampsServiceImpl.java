@@ -87,8 +87,8 @@ public class TimestampsServiceImpl  implements TimestampsService{
     }
 
     @Override
-    public boolean verifyFile(byte[] file)  {
-        File file1 = fileRepository.findByFileContent(file);
+    public boolean verifyFile(byte[] file, String fileName)  {
+        File file1 = fileRepository.findByFileName(fileName);
         Timestamps timestamps = timestampsRepository.findByFile(file1);
 
     try {
@@ -149,13 +149,17 @@ public class TimestampsServiceImpl  implements TimestampsService{
     public Timestamps findByFile(byte[] file) {
         return timestampsRepository.findByFile(fileRepository.findByFileContent(file));
     }
+    @Override
+    public Timestamps findByFileName( String name) {
+        return timestampsRepository.findByFile(fileRepository.findByFileName(name));
+    }
 
     @Override
     public List<TimestampResponse> getAllTimestampsByUser() {
         return timestampsRepository.findAllByUser(userService.getCurrentUser());
     }
 
-
+ 
 
 
 }

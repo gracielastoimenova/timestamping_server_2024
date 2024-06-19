@@ -15,7 +15,7 @@
             height: 100vh;
         }
 
-        form {
+        .container {
             background-color: #9297e0;
             padding: 20px;
             border-radius: 10px;
@@ -23,6 +23,7 @@
             width: 80%;
             max-width: 500px;
             text-align: center;
+            position: relative;
         }
 
         p {
@@ -57,17 +58,41 @@
         input[type="submit"]:hover {
             background-color: #e0629b;
         }
+
+        .link-container {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .link-container a {
+            text-align: center;
+            color: #fff;
+            text-decoration: none;
+            background-color: #ff73b3;
+            padding: 10px 20px;
+            border-radius: 2px;
+            transition: background-color 0.3s;
+        }
+
+        .link-container a:hover {
+            background-color: #e0629b;
+        }
     </style>
 </head>
 <body>
 
-<form th:method="POST" th:action="@{'/main/timestamp'}" enctype="multipart/form-data">
-    <p>Enter the file that you want to be timestamped here: </p>
-    <br>
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <br>
-    <input type="submit" value="Timestamp" name="submit" id="sub">
-</form>
+<div class="container">
+    <form th:method="POST" th:action="@{'/main/timestamp'}" enctype="multipart/form-data">
+        <p>Enter the file that you want to be timestamped here: </p>
+        <br>
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <br>
+        <input type="submit" value="Timestamp" name="submit" id="sub">
+    </form>
+    <div class="link-container">
+        <a th:href="@{'/main'}">Back to main</a>
+    </div>
+</div>
 
 </body>
 </html>

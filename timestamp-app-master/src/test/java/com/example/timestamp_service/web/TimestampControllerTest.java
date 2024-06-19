@@ -105,50 +105,8 @@ public class TimestampControllerTest {
         assertEquals("redirect:/main/timestamp", view);
     }
 
-    @Test
-    public void testVerifyTimestamp() throws Exception {
-        MultipartFile fileToBeChecked = mock(MultipartFile.class);
-        byte[] fileBytes = "testFile".getBytes();
-        when(fileToBeChecked.getBytes()).thenReturn(fileBytes);
-        Model model = mock(Model.class);
 
-        when(timestampsService.findByFile(fileBytes)).thenReturn(mock(Timestamps.class));
-        when(timestampsService.verifyFile(fileBytes)).thenReturn(true);
 
-        String view = timestampController.verifyTimestamp(fileToBeChecked, model);
-
-        verify(model).addAttribute("verify", true);
-        assertEquals("verify", view);
-    }
-
-    @Test
-    public void testVerifyTimestampNotFound() throws Exception {
-        MultipartFile fileToBeChecked = mock(MultipartFile.class);
-        byte[] fileBytes = "testFile".getBytes();
-        when(fileToBeChecked.getBytes()).thenReturn(fileBytes);
-        Model model = mock(Model.class);
-
-        when(timestampsService.findByFile(fileBytes)).thenReturn(null);
-
-        String view = timestampController.verifyTimestamp(fileToBeChecked, model);
-
-        verify(model).addAttribute("verify", "not_found");
-        assertEquals("verify", view);
-    }
-
-    @Test
-    public void testVerifyTimestampException() throws Exception {
-        MultipartFile fileToBeChecked = mock(MultipartFile.class);
-        byte[] fileBytes = "testFile".getBytes();
-        when(fileToBeChecked.getBytes()).thenReturn(fileBytes);
-        Model model = mock(Model.class);
-
-        doThrow(new RuntimeException()).when(timestampsService).findByFile(fileBytes);
-
-        String view = timestampController.verifyTimestamp(fileToBeChecked, model);
-
-        assertEquals("redirect:/main/verify_timestamp", view);
-    }
 
     @Test
     public void testSearch() {

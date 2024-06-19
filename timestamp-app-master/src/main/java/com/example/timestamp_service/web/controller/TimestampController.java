@@ -92,13 +92,13 @@ public class TimestampController  {
     @PostMapping("/verify_timestamp")
     public String verifyTimestamp(@RequestParam("file") MultipartFile fileToBeChecked, Model model)  {
              try {
-                 if (timestampsService.findByFile(fileToBeChecked.getBytes()) != null) {
-                     model.addAttribute("verify", timestampsService.verifyFile(fileToBeChecked.getBytes()));
+                 if (timestampsService.findByFileName(fileToBeChecked.getOriginalFilename()) != null) {
+                     model.addAttribute("verify", timestampsService.verifyFile(fileToBeChecked.getBytes(), fileToBeChecked.getOriginalFilename()));
                  } else {
                      model.addAttribute("verify", "not_found");
                  }
                  return "verify";
-             } catch ( IOException | UnrecoverableKeyException | NoSuchAlgorithmException | KeyStoreException | SignatureException | InvalidKeyException e){
+             } catch (IOException e){
                  System.out.println("verifyTimestamp threw exception controller");
                  return "redirect:/main/verify_timestamp";
              }
