@@ -32,8 +32,8 @@ public class TimestampServiceApplication {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setUsername("gracielastoimenova@gmail.com");
-        mailSender.setPassword("laks cbfm cuxx otoa");
+        mailSender.setUsername("");
+        mailSender.setPassword("");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
@@ -46,8 +46,8 @@ public class TimestampServiceApplication {
 
     @Bean
     public KeyStore keyStore() throws Exception{
-        String keystorePath = "///C:/Users/graci/root_ca/ib_ca/timestamps.p12";
-        String keystorePassword = "timestamp";
+        String keystorePath = "";
+        String keystorePassword = "";
 
         try (FileInputStream fis = new FileInputStream(keystorePath)) {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());

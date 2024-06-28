@@ -9,6 +9,9 @@ public interface SSLService {
     byte[] signWithPrivateKey(byte[] data, PrivateKey privateKey) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException;
 
     PrivateKey loadPrivateKey() throws KeyStoreException,  NoSuchAlgorithmException, UnrecoverableKeyException;
+    PublicKey loadPublicKey() throws KeyStoreException;
     X509Certificate loadCertificate() throws KeyStoreException;
+
+    boolean verifyWithPublicKey (byte[] data, byte[] signature, PublicKey publicKey) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException;
 
 }

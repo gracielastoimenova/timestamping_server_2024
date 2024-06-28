@@ -32,15 +32,28 @@ public class SSLServiceImpl implements SSLService {
     @Override
     public PrivateKey loadPrivateKey() throws KeyStoreException,  NoSuchAlgorithmException, UnrecoverableKeyException {
         String alias = "1";
-        String password = "timestamp";
+        String password = "";
 
         return (PrivateKey) keyStore.getKey(alias,password.toCharArray());
     }
 
     @Override
+    public PublicKey loadPublicKey() throws KeyStoreException {
+        X509Certificate certificate = loadCertificate();
+        return certificate.getPublicKey();    }
+
+    @Override
     public X509Certificate loadCertificate() throws KeyStoreException {
         String alias = "1";
         return (X509Certificate) keyStore.getCertificate(alias);
+    }
+
+    @Override
+    public boolean verifyWithPublicKey(byte[] data, byte[] signature, PublicKey publicKey) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+        Signature sig = Signature.getInstance("SHA256withRSA");
+        sig.initVerify(publicKey);
+        sig.update(data);
+        return sig.verify(signature);
     }
 
 }

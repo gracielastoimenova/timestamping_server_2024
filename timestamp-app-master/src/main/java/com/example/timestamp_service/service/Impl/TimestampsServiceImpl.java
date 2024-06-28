@@ -92,16 +92,19 @@ public class TimestampsServiceImpl  implements TimestampsService{
         Timestamps timestamps = timestampsRepository.findByFile(file1);
 
     try {
-        PrivateKey privateKey = sslService.loadPrivateKey();
+        PublicKey publicKey = sslService.loadPublicKey();
 
         String timestamp = timestamps.getDateAndTimeOfSigning();
         byte[] timestampedFile = timestamps.getTimestampedFile();
 
-        byte[] hashedFileWithTimestamp = sslService.hashFile(concatenateData(sslService.hashFile(file), timestamp.getBytes())) ;
-        hashedFileWithTimestamp = sslService.signWithPrivateKey(hashedFileWithTimestamp, privateKey);
+        byte[] hashedFile = sslService.hashFile(file);
 
-        return Arrays.equals(hashedFileWithTimestamp, timestampedFile);
-    } catch (NoSuchAlgorithmException | UnrecoverableKeyException | KeyStoreException | SignatureException | InvalidKeyException e){
+        byte[] concatenatedHash = concatenateData(hashedFile, timestamp.getBytes());
+
+        byte[] hashedFileWithTimestamp = sslService.hashFile(concatenatedHash);
+
+        return sslService.verifyWithPublicKey(hashedFileWithTimestamp, timestampedFile, publicKey);
+    } catch (NoSuchAlgorithmException | KeyStoreException | SignatureException | InvalidKeyException e){
         System.out.println("verifyFile threw exception for file: " + file1.getFileName());
         return false;
     }
@@ -128,7 +131,6 @@ public class TimestampsServiceImpl  implements TimestampsService{
             return null;
                 }
     }
-
 
     @Override
     public byte[] concatenateData(byte[] data1, byte[] data2) {
@@ -159,7 +161,7 @@ public class TimestampsServiceImpl  implements TimestampsService{
         return timestampsRepository.findAllByUser(userService.getCurrentUser());
     }
 
- 
+
 
 
 }
